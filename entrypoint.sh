@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Added line 154
+
 set -e
 
 if [ "$1" = 'splunk' ]; then
