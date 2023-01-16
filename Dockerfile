@@ -16,8 +16,7 @@ RUN apt update && apt install -y --force-yes \
 	openssh-server \
 	supervisor \
 	cron \
-	tcpdump \
-	curl
+	tcpdump 
 
 RUN cpanm LWP::UserAgent IO::Socket::SSL
 
