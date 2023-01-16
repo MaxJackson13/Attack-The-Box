@@ -6,7 +6,7 @@ I've played plenty of HackTheBox and it's a great way to get to know your way ar
 
 - There's a web app vulnerable to SSRF on port 5000
 - There's a splunk instance installed on the machine
-- SSH is open on 22
+- SSH is open on port 22
 - The web interface on port 8000 is exposed globally
 - But the management API is exposed only to localhost:8089
 - Research to find default credentials are 'admin:changeme'
