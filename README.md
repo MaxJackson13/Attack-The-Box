@@ -21,7 +21,7 @@ I've played plenty of HackTheBox and it's a great way to get to know your way ar
 - Analyse the captured traffic. It's https, if it's not a DH key exchange you could crack it
 - As an admin user you can read splunk config files
 - Find the server's encrypted RSA private key in /opt/splunk/etc/auth/server.pem
-- The encryption phrase is in /opt/splunk/system/default/server.conf 
+- The encryption password is in /opt/splunk/system/default/server.conf 
 - Decrypt the key with OpenSSL
 - Decrypt the traffic with tshark/wireshark
 - The traffic authenticates to the management API which uses basic authorization
