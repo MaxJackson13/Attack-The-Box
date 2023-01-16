@@ -145,7 +145,10 @@ EOF
       fi
     done
   fi
-
+  
+  # Sneakily create admin2 user in entrypoint so don't need to mess with trying to get a script running after container started 
+  # and not conflict with the splunk service starting
+  
   sudo -HEu ${SPLUNK_USER} sh -c "${SPLUNK_HOME}/bin/splunk add user admin2 -password changeme2 -role admin -auth admin:changeme"
 
   sudo -HEu ${SPLUNK_USER} tail -n 0 -f ${SPLUNK_HOME}/var/log/splunk/splunkd_stderr.log &
