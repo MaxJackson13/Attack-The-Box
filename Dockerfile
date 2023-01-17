@@ -13,12 +13,11 @@ COPY --chown=root:root ./health_check.pl /root/health_check.pl
 RUN chmod +x /sbin/entrypoint.sh /root/health_check.pl
 
 RUN apt update && apt install -y --force-yes \
-	openssh-server \
-	supervisor \
-	cron \
-	tcpdump 
-
-RUN cpanm LWP::UserAgent IO::Socket::SSL
+        openssh-server \
+        supervisor \
+        cron \
+        tcpdump \
+        libwww-perl
 
 RUN mkdir /var/run/sshd
 
@@ -30,14 +29,16 @@ RUN echo 'admin2:changeme2' | chpasswd
 
 RUN echo 'root:changeme3' | chpasswd
 
-#RUN echo 'Authorization: Basic cm9vdDpjaGFuZ2VtZTM=' > /root/headers.txt
-
-RUN echo '* * * * * perl /root/health_check.pl' > /var/spool/cron/crontabs/root
+RUN echo '* * * * * perl /root/health_check.pl' | crontab -
 
 RUN usermod -aG sudo admin2
 
-RUN sed -i 's/%sudo/#%sudo/g' /etc/sudoers
+RUN usermod -aG splunk admin2
+
+RUN sed -i 's/%sudo/# %sudo/g' /etc/sudoers
 
 RUN echo 'admin2 ALL=(root) NOEXEC: /usr/sbin/tcpdump -ni lo * ' >> /etc/sudoers
+
+RUN echo 'admin2 ALL=(splunk) NOPASSWD: /bin/ls -l /opt/splunk/*, /bin/cat /opt/splunk/*' >> /etc/sudoers
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
