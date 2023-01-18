@@ -35,7 +35,13 @@ Starting a netcat listener at the `host:port` shown in the first image, we recei
 I copied the relevant portion to a file and prettified the output with `jq`. We can see an `admin2` user.
 
 <img src="images/access1.png">
+
+Doing a light bruteforce against the `admin2` user on the web container, we find the weak and predictable password `changeme2`. We can simply `ssh` into the box now.
+
 <img src="images/access2.png">
+
+Let's immediately test for credential reuse. We can pivot into the Splunk container with `ssh`.
+
 <img src="images/sudo.png">
 
 The file `opt/splunk/etc/auth/server.pem` contains the certificate and encrypted RSA private keys generated when splunk is first installed on the machine.
