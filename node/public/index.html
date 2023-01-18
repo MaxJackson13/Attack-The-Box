@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Check</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>HTTP Health Checker</h1>
+        <h4>Simple health checks for any URL</h4>
+        <!-- <hr> -->
+        <div class="configure">
+            <h2 style="font-weight: 300; font-size: 23px;">Configure Webhook</h2>
+        </div>
+        <div class="form-container">       
+            <p>Utility to let you check if a remote http service is available. It is useful if you want to check whether the service is running or if there are any firewalls blocking access</p>
+            <p style="margin-top: 0px;">Enter the URL you want to check the health of in the webhook URL field, and enter where you want to receive the status of the health checked URL in the payload URL field.</p>
+            
+            <form action="/" method="post" style="width: 100%;">
+                <label for="payloadURL">Payload URL</label>
+                <input type="url" id="payloadURL" name="payloadURL" placeholder="http://example.com/postreceive" required>
+                <label for="webhookURL">Webhook URL</label>
+                <input type="url" id="webhookURL" name="webhookURL" placeholder="http://example.com" required>
+                <br>
+                <button type="submit" class="test">Test</button>
+            </form>
+            
+        </div>
+        
+    </div>
+</body>
+</html>
