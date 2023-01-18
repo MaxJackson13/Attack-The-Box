@@ -28,9 +28,11 @@ I'll make a file `re.php` and host it on my box with `php -S 0.0.0.0:8001` to st
 
 <img src="images/res.png">
 
-Starting a netcat listener at the `host:port` shown in the first image, we receive the contents of the Splunk management API endpoint specified above. I copied the relevant portionn to a file and prettified the output with `jq`. We can see an `admin2` user.
+Starting a netcat listener at the `host:port` shown in the first image, we receive the contents of the Splunk management API endpoint specified above. 
 
 <img src="images/user.png">
+
+I copied the relevant portion to a file and prettified the output with `jq`. We can see an `admin2` user.
 
 <img src="images/access1.png">
 <img src="images/access2.png">
