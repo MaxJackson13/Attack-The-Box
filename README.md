@@ -24,11 +24,11 @@ Skipping host and service enumeration (it's boring and the same every time), I'l
 
 <img src="images/re.png">
 
-I'll make a file `re.php` and host it on my box with `php -S 0.0.0.0:8001` to start a basic `php` server serving on all interfaces at port 8001. `re.php` uses the `header()` function to pass the request into the `private` network by specifying  `Location: whatever`. In this case, 'whatever' is the `/services/authentication/users` endpoint on the management API at port 8089. This endpoint requires authorization, but Splunk <7.1.0 allows remote login with default credentials which can be easily found to be `admin:changeme`. Further, the endpoint uses basic authorization which means the credentials are sent base64 encoded in the `Authorization:` header, alternatively, we can specify the credentials in the URL like we can do with FTP. 
+I'll make a file `re.php` and host it on my box with `php -S 0.0.0.0:8001` to start a basic `php` server serving on all interfaces at port 8001. `re.php` uses the `header()` function to pass the request into the 'private' network by specifying  `Location: whatever`. In this case, 'whatever' is the `/services/authentication/users` endpoint on the management API at port 8089. This endpoint requires authorization, but Splunk <7.1.0 allows remote login with default credentials which can be easily found to be `admin:changeme`. Further, the endpoint uses basic authorization which means the credentials are sent base64 encoded in the `Authorization:` header, alternatively, we can specify the credentials in the URL like we can do with FTP. 
 
 <img src="images/res.png">
 
-Starting a netcat listener at the `host:port` shown in the first image, we receive the contents of the Splunk management API endpoint specified above. I copied the relevant portionn to a file and prettified the output with `jq`. We can see and `admin2` user.
+Starting a netcat listener at the `host:port` shown in the first image, we receive the contents of the Splunk management API endpoint specified above. I copied the relevant portionn to a file and prettified the output with `jq`. We can see an `admin2` user.
 
 <img src="images/user.png">
 
