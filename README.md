@@ -26,4 +26,9 @@ We can upload `pspy64` to find a root owned cron running each minute, called `he
 <img src="images/access1.png">
 <img src="images/access2.png">
 <img src="images/sudo.png">
+
+The file `opt/splunk/etc/auth/server.pem` contains the certificate and encrypted RSA private keys generated when splunk is first installed on the machine.
+
 <img src="images/sslpass.png">
+
+The password used to encrypt the above RSA key is static across splunk instances however and is in cleartext in `/opt/splunk/etc/system/default/server.pem`. I'll copy the key over to my box in a file `enc.pem` and run `openssl rsa -in enc.pem -out dec.pem` which will prompt me for the `sslPassword` and write the decrypted key to `dec.pem`
