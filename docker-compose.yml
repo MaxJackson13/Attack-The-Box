@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  node:
+    container_name: node
+    build:
+      context: ./node/
+      dockerfile: Dockerfile
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.2
+
+  splunk:
+    container_name: splunk
+    build:
+      context: ./splunk/
+      dockerfile: Dockerfile
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.3
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
