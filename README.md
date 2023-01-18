@@ -10,7 +10,7 @@ The web app is the SSRF app from my `Vulnerable-Web-App` repo. We can leverage t
 
 Knowing weak credentials `admin:user` were in use, we can try an authenticate with these over `ssh` to the web app container. This user isn't on the box. From here we could try and bruteforce the `admin2` user, creating a wordlist from the password `changeme` using hashcat. The credentials `admin2:changeme2` work.
 
-There's not much on the web app container, so we could try and pivot to the splunk container hoping for password reuse. We find we can ssh to the splunk container with the same credentials.
+There's not much on the web app container, so we could try and pivot to the splunk container hoping for password reuse. We find we can `ssh` to the splunk container with the same credentials.
 
 Being a splunk admin in the container, the admin2 user has sudo privileges to list and read files in `/opt/splunk`. We can use this to read configuration files which reveal an encrypted RSA private key used to encrypt traffic to the splunk management service on port 8089, as well as the `sslPassword` used to encrypt the RSA key. We can use `openssl` to decrypt the key. `admin2` also has sudo privileges to run `tcpdump` on the loopback interface- presumably for troubleshooting purposes. 
 
