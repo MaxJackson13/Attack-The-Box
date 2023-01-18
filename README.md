@@ -19,7 +19,13 @@ We can upload `pspy64` to find a root owned cron running each minute, called `he
 # Speedrun
 
 <img src="images/health_check.png">
+
+Skipping host and service enumeration (it's boring and the same every time), I'll visit the site at `172.18.0.2:5000`. Essentially it says to set a `webhookURL` and a `payloadURL`, and the server will make a request out to the `webhookURL` and send the results to the `payloadURL`. Trying any private addresses or obfuscation/encoding thereof returns a `host not allowed` message so we'll need another approach. A common trick is to get the server to reach out to you and redirect it on the desired target, bypassing any serverside filtering. This can be done in `php` with the `header()` function and the `Location:` HTTP header.
+
 <img src="images/re.png">
+
+I'll make a file `re.php` and host it on my box with `php -S 0.0.0.0:8001` to start a basic `php` server serving on all interfaces at port 8001. `re.php` uses the `header()` function to pass the request into the `private` network by specifying  `Location: whatever`. In this case, 'whatever' is the `/services/authentication/users` endpoint on the management API at port 8089.
+
 <img src="images/res.png">
 <img src="images/user.png">
 
