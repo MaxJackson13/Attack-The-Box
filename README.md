@@ -23,3 +23,7 @@ We can upload `pspy64` to find a root owned cron running each minute, called `he
 <img src="images/res.png">
 <img src="images/user.png">
 
+<img src="images/access1.png">
+<img src="images/access2.png">
+<img src="images/sudo.png">
+<img src="images/sslpass.png">
