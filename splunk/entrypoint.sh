@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Default image entrypoint, added line 155
+# Default splunk image entrypoint, added line 154
 
 set -e
 
@@ -8,7 +8,6 @@ if [ "$1" = 'splunk' ]; then
   shift
   sudo -HEu ${SPLUNK_USER} ${SPLUNK_HOME}/bin/splunk "$@"
 elif [ "$1" = 'start-service' ]; then
-#  chmod -R 750 ${SPLUNK_HOME}
   # If user changed SPLUNK_USER to root we want to change permission for SPLUNK_HOME
   if [[ "${SPLUNK_USER}:${SPLUNK_GROUP}" != "$(stat --format %U:%G ${SPLUNK_HOME})" ]]; then
     chown -R ${SPLUNK_USER}:${SPLUNK_GROUP} ${SPLUNK_HOME}
