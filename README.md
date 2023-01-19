@@ -1,6 +1,6 @@
 # Attack-The-Box
 
-I've played plenty of HackTheBox and it's a great way to get to know your way around different operating systems and to learn about and interact with new technologies you might not have had the chance to otherwise. I was always amazed by level of complexity and detail that goes into some of the machines so I felt the learning experience in making a vulnerable machine must be a level up entirely from playing them. As a result I made a network of a couple docker containers where a user can go from external access to root inside a container.
+I've played plenty of HackTheBox and it's a great way to get to know your way around different operating systems and to learn about and interact with new technologies you might not have had the chance to otherwise. I'm always amazed by the level of complexity and detail that goes into some of the machines, so I felt the learning experience in making a vulnerable machine must be a level up entirely from playing them. As a result I made a network of a couple docker containers where a user can go from external access to root inside a container.
 
 # Machine Summary
 
