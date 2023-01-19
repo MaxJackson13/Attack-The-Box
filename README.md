@@ -67,10 +67,10 @@ Finally run `sudo iptables -D OUTPUT -s 172.18.0.1 -d 172.18.0.3 -j DROP` to del
 - Configure the `node` app not to follow redirects by specifying `{ maxRedirects: 0 }` in `axios.get()`
 - Use PAM to enable a strong password policy for SSH. Edit `minlength, minclass, maxrepeat` in `/etc/pam.d/common-password`.
 - Disable `ssh` password authentication with the line `PubkeyAuthentication yes` in `/etc/ssh/sshd_config`.
-- Better yet disable `ssh` if not needed with `sudo systemcl disable ssh`.
+- Better yet disable `ssh` if not needed with `sudo systemcl disable ssh` so it persists across reboots.
 - Try and avoid password reuse by educating users, centralized authentication e.g. Kerberos, LDAP, or enforce MFA.
 - Keep software patched and up to date. Versions of splunk >7.1.0 don't allow remote login using default credentials, and force the user to provide a new password on first local login.
-- Use the principle of least privilege. Does `admin2` need to be able to read *every* file in `/opt/splunk`, do they *need* to be able to capture traffic on localhost, if yes can they make do with only certain ips/ports/protocols.
+- Use the principle of least privilege. Does `admin2` need to be able to read *every* file in `/opt/splunk` Do they *need* to be able to capture traffic on localhost, if yes can they make do with only certain ips/ports/protocols.
 - Weak crypto. The perl script in the root cron specified a weak cipher suite `AES128-SHA256`. A DH based key exchange offers perfect forward secrecy, so knowledge of long term secrets like the server's private key isn't enough to decrypt the traffic.
 
 Any one of the above hardening techniques has the potential to completely halt the attack flow from proceding to the next step. This is why defense in depth is such a powerful concept.
