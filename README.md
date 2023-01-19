@@ -44,7 +44,7 @@ A good first place to look for creds is always `.bash_history`. In this case we 
 
 <img src="images/sudo.png">
 
-Running `sudo -l`, we find we can run `tcpdump` on localhost and can list directories and read any file in `/opt/splunk`. The file `opt/splunk/etc/auth/server.pem` contains the certificate and encrypted RSA private keys generated when splunk is first installed on the machine. We may be able to use this to decrypt HTTPS traffic between clients the server.
+Running `sudo -l`, we find we can run `tcpdump` on localhost and can list directories and read any file in `/opt/splunk`. The file `opt/splunk/etc/auth/server.pem` contains the certificate and encrypted RSA private keys generated when splunk is first installed on the machine. We may be able to use this to decrypt HTTPS traffic between clients and the server.
 
 <img src="images/sslpass.png">
 
