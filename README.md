@@ -34,13 +34,13 @@ Starting a netcat listener at the `host:port` shown in the first image, we recei
 
 I copied the relevant portion to a file and prettified the output with `jq`. We can see an `admin2` user.
 
-<img src="images/access1.png">
+<img src="images/access.png">
 
-Doing a light bruteforce against the `admin2` user on the web container, we find the weak and predictable password `changeme2`. We can simply `ssh` into the box now.
+Doing a light password spray against known users on the web container, we find the password `changeme` has been reused for `admin`. We can simply `ssh` into the box now.
 
-<img src="images/access2.png">
+<img src="images/splunk_access.png">
 
-Let's immediately test for credential reuse. We can pivot into the Splunk container with `ssh`. Running `id` shows we're in the `sudo` group, and we know the user's password. 
+A good first place to look for creds is always `.bash_history`. In this case we see an erroneous `sudo` command which potentially exposes `admin2's` credentials. We can try pivot into the Splunk container with `ssh` and `admin2:changeme2`. Running `id` shows we're in the `sudo` group, and we know the user's password. 
 
 <img src="images/sudo.png">
 
