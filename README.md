@@ -8,7 +8,7 @@ Running `start.sh` launches `docker-compose` to create a node app at `172.18.0.2
 
 The web app is the `SSRF` app written in `node.js` from my `Vulnerable-Web-App` repo. We can leverage the SSRF to make requests to the splunk instance even though the app backend filters out private addresses from the `webhookURL` input. If we stand up a php server and a script redirecting to the splunk container, we can reach the endpoint `172.18.0.3:8089/services/authentication/users` and have this page sent to a netcat listener at the specified `payloadURL`. From this we can see an `admin2` user.
 
-Knowing weak credentials `admin:user` were in use, we can try an authenticate with these over `ssh` to the web app container which works. From here we could try and pivot to the `splunk` container with `ssh`, hoping for credential re-use but this doesn't work. Looking around the filesystem we can read admin's `.bash_history` which reveals a mistake in a `sudo -u` command which exposes `admin2's` password.
+Knowing weak credentials `admin:user` were in use, we can try an authenticate with these over `ssh` to the web app container which works. From here we could try and pivot to the `splunk` container with `ssh`, hoping for credential re-use but this doesn't work. Looking around the filesystem we can read admin's `.bash_history` which reveals a mistake in a `sudo -u` command which exposes `admin2`'s password.
 
 We find we can pivot to the splunk container with the found credentials over `ssh`.
 
