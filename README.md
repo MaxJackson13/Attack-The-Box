@@ -38,7 +38,7 @@ I copied the relevant portion to a file and prettified the output with `jq`. We 
 
 Doing a light password spray against known users on the web container, we find the password `changeme` has been reused for `admin`. We can simply `ssh` into the box now.
 
-<img src="images/splunk_access.png">
+<img src="images/splunk-access.png">
 
 A good first place to look for creds is always `.bash_history`. In this case we see an erroneous `sudo` command which potentially exposes `admin2's` credentials. We can try pivot into the Splunk container with `ssh` and `admin2:changeme2`. Running `id` shows we're in the `sudo` group, and we know the user's password. 
 
